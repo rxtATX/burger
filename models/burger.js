@@ -7,7 +7,7 @@ functions = orm.functions;
 exports.action = function(req, res, more) {
     switch (req) {
         case "select":
-            functions.selectAll();
+            functions.selectAll(res);
             break;
         case "insert":
             functions.insertOne(res, more);

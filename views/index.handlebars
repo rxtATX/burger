@@ -1,29 +1,50 @@
-<h1>Good Burger</h1>
-
-<ul>
-  {{#each burgers}}
-    <li>
-      <p>
-        {{this.id}}. {{this.burger}}
-
-        <form action="/{{this.id}}" method="POST">
-          <input type="hidden" name="id" value="{{this.id}}">
-          <button type="submit">Devour!</button>
-        </form>
-      </p>
-    </li>
-  {{/each}}
-</ul>
-
-<h2>Cook a burger</h2>
-<form method="GET" action="/" class="button-size">
-	<textarea type="text" name="plan"></textarea>
-	<button type="submit">Save Plan!</button>
-</form>
-
-<h2>Update a Plan</h2>
-<form action="/?_method=PUT" method="POST" class="button-size">
-  <input type="text" name="id" placeholder="id">
-	<textarea type="text" name="plan" placeholder="plan"></textarea>
-	<button type="submit">Devour!</button>
-</form>
+<div class="text-center">
+  <h1><em>Good Burger</em></h1>
+</div>
+<container class="jumbotron">
+  <div class="row">
+      <p class="text-left col-sm-6">Still on the menu</p>
+      <p class="text-right col-sm-6">Devoured</p>
+  </div>
+  <div class="row">
+      <ul class="text-left col-sm-6">
+        {{#each burgers}}
+        {{#unless devoured}}
+        <li> 
+          <p>{{this.id}}. {{this.burger_name}}</p>
+            <form action="/{{this.id}}_method=PUT" method="POST">
+              <input type="hidden" name="devoured" value="{{this.id}}">
+              <button type="submit">Devour!</button>
+            </form>
+        </li>
+        {{/unless}}
+        {{/each}}
+      </ul>
+      <ul class="text-right col-sm-6">
+        {{#each burgers}}
+        {{#if devoured}}
+        <li>
+          <p>{{this.id}}. {{this.burger_name}}</p>
+        </li>
+        {{/if}}
+        {{/each}}
+      </ul>
+  </div>
+</container>
+<container class="row">
+  <div class="actionBtn text-left col-sm-6">
+    <h2>Cook a burger</h2>
+    <form method="POST" action="/" class="button-size">
+      <textarea type="text" name="burger"></textarea>
+      <button type="submit">Cook burger!</button>
+    </form>
+  </div>
+  <div class="actionBtn text-right col-sm-6">
+    <h2>Eat that burger</h2>
+    <form action="/?_method=PUT" method="POST" class="button-size">
+      <input type="text" name="id" placeholder="id">
+      <textarea type="text" name="burger" placeholder="burger"></textarea>
+      <button type="submit">Devour!</button>
+    </form>
+  </div>
+</container>

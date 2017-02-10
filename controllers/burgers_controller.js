@@ -4,18 +4,13 @@ var app = express();
 var burger = require("../models/burger.js");
 var functions = burger.action;
 
-// exports.
-getBurger = app.get("/", function(req, res) {
-    
+exports.getBurger = app.get("/", function(req, res) {
+    functions("select", res);
 });
 
-// exports.
-postBurger = app.post("/", function(req, res) {
-	var newBurger = req.body;
-	burger("insert", res, newBurger.burger_name);
+exports.postBurger = app.post("/", function(req, res) {
+	functions("insert", res);
 });
-// exports.
-putBurger = app.put("/", function(req, res) {
-	res.json(burgers);
-    res.redirect("/");
+exports.putBurger = app.put("/", function(req, res) {
+	functions("update", res);
 });

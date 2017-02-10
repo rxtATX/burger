@@ -1,113 +1,57 @@
-// var express = require("express");
-// var app = express();
-
-// var bodyParser = require("body-parser");
-// var methodOverride = require("method-override");
-// var exphbs = require("express-handlebars");
-// var path = require("path");
-
-// var PORT = 5000;
-
-// var controllers = require('./controllers/burgers_controller.js');
-
-// app.use(express.static(__dirname + "/public"));
-
-// app.use(bodyParser.urlencoded({ extended: false }));
-
-// app.use(methodOverride("_method"));
-
-// app.engine("handlebars", exphbs({ defaultLayout: "main" }));
-// app.set("view engine", "handlebars");
-
-// app.use("/", controllers.get);
-// app.use("/", controllers.post);
-
-// app.listen(process.env.PORT || 5000, function() {
-//     console.log("App listening on PORT " + PORT);
-// });
-
 var express = require("express");
+var app = express();
+
 var bodyParser = require("body-parser");
 var methodOverride = require("method-override");
+var exphbs = require("express-handlebars");
+var path = require("path");
 
-var app = express();
-var port = 3000;
+var PORT = 5000;
 
-// Serve static content for the app from the "public" directory in the application directory.
+var controllers = require('./controllers/burgers_controller.js');
+var router = express.Router();
+
 app.use(express.static(__dirname + "/public"));
 
-// Parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }));
+//Parses the contents of the web app to ensure it's easier to use.
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.text());
+app.use(bodyParser.json({ type: "application/vnd.api+json" }));
 
-// Override with POST having ?_method=DELETE
 app.use(methodOverride("_method"));
-
-var exphbs = require("express-handlebars");
 
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
-var mysql = require("mysql");
+app.use("/", controllers.getBurger);
+app.use("/", controllers.postBurger);
+app.use("/", controllers.putBurger);
 
-var connection = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "",
-  database: "day_planner_db"
+app.listen(process.env.PORT || 5000, function() {
+    console.log("App listening on PORT " + PORT);
 });
 
-connection.connect(function(err) {
-  if (err) {
-    console.error("error connecting: " + err.stack);
-    return;
-  }
+// var express = require("express");
+// var bodyParser = require("body-parser");
+// var methodOverride = require("method-override");
 
-  console.log("connected as id " + connection.threadId);
+// var app = express();
+// var port = 3000;
 
-});
+// // Serve static content for the app from the "public" directory in the application directory.
+// app.use(express.static(__dirname + "/public"));
 
-app.get("/", function(req, res) {
-  connection.query("SELECT * FROM plans;", function(err, data) {
-    if (err) {
-      throw err;
-    }
+// // Parse application/x-www-form-urlencoded
+// app.use(bodyParser.urlencoded({ extended: false }));
 
-    res.render("index", { plans: data });
+// // Override with POST having ?_method=DELETE
+// app.use(methodOverride("_method"));
 
-  });
-});
+// var exphbs = require("express-handlebars");
 
-app.post("/", function(req, res) {
-  connection.query("INSERT INTO plans (plan) VALUES (?)", [req.body.plan], function(err, result) {
-    if (err) {
-      throw err;
-    }
+// app.engine("handlebars", exphbs({ defaultLayout: "main" }));
+// app.set("view engine", "handlebars");
 
-    res.redirect("/");
-  });
-});
 
-app.delete("/:id", function(req, res) {
-  connection.query("DELETE FROM plans WHERE id = ?", [req.params.id], function(err, result) {
-    if (err) {
-      throw err;
-    }
-
-    res.redirect("/");
-  });
-});
-
-app.put("/", function(req, res) {
-
-  connection.query("UPDATE plans SET plan = ? WHERE id = ?", [
-    req.body.plan, req.body.id
-  ], function(err, result) {
-    if (err) {
-      throw err;
-    }
-
-    res.redirect("/");
-  });
-});
-
-app.listen(port);
+// app.listen(port);

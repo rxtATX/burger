@@ -1,31 +1,33 @@
+var server = require("../server.js");
 var sqlDatabase = require("./connection.js");
 
 exports.functions = {
 
-    selectAll: function() {
-        sqlDatabase.query("SELECT * FROM burgers", function(err, res) {
+    selectAll: function(res) {
+        sqlDatabase.query("SELECT * FROM burgers", function(err, data) {
             if (err) throw err;
-            res.render("index", {burgers: res});
+            res.render("index", {burgers: data});
         });
     },
 
-    insertOne: function() {
-        sqlDatabase.query("INSERT INTO burgers VALUE ?", [req.body.burgers], function(err, res) {
+    insertOne: function(res) {
+        sqlDatabase.query("INSERT INTO burgers VALUE ?", [req.body.burger_name], function(err, data) {
             if (err) {
                 throw err;
             }
-        
-
+            console.log(req.body.burger_name);
         res.redirect("/");
         });
     },
 
-    updateOne: function() {
-        sqlDatabase.query("UPDATE burgers SET ? where id = ?", [req.body.burgers, req.body.id], function(err, res) {
+    updateOne: function(res) {
+        sqlDatabase.query("UPDATE burgers SET ? where id = ?", [req.body.burger_name, req.body.id], function(err, data) {
         if (err) {
             throw err;
         }
-
+        res.render("index", {burgers: data});
+        console.log(req.body.burger_name);
+        console.log(req.body.id);
         res.redirect("/");
         });
     }
