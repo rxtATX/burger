@@ -1,15 +1,6 @@
 var mysql = require("mysql");
-// var passroute = require("../keys.js");
-// var passcode = passroute.passcode;
-var PASSWORD;
-
-var connection = mysql.createConnection({
-	host: "localhost",
-	port: 3306,
-	user: "root",
-	password: (PASSWORD),
-	database: "burgers_db"
-});
+var passcode = require("../keys.js");
+var connection = passcode.connection;
 
 connection.connect(function(err) {
     if (err) throw err;
