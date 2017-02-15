@@ -8,7 +8,7 @@ var burger = {
             callback(result);
         });
     },
-    create: function(values, callback) {
+    create: function(objColumnVals, values, callback) {
         orm.create("burgers", values, function(result) {
             callback(result);
         });

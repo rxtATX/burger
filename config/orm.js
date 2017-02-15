@@ -10,7 +10,7 @@ var orm = {
         });
     },
     create: function(tableData, values, callback) {
-        sqlDatabase.query("INSERT INTO burgers (burger_name, devoured) VALUES (?, ?)", values, function(err, result) {
+        sqlDatabase.query("INSERT INTO burgers (burger_name, devoured) VALUES (?, false)", values, function(err, result) {
             if (err) throw err;
 
         callback(result);
