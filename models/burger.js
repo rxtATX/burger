@@ -1,19 +1,29 @@
 var express = require("express");
-var app = express();
 
 var orm = require("../config/orm.js");
-functions = orm.functions;
 
-exports.action = function(req, res, more) {
-    switch (req) {
-        case "select":
-            functions.selectAll(req, res);
-            break;
-        case "insert":
-            functions.insertOne(req, res, more);
-            break;
-        case "update":
-            functions.updateOne(req, res, more);
-            break;
+var burger = {
+    all: function(callback) {
+        orm.all("burgers", function(result) {
+            callback(result);
+        });
+    },
+    create: function(values, callback) {
+        orm.create("burgers", values, function(result) {
+            callback(result);
+        });
+    },
+    update: function(objColumnVals, condition, callback) {
+        orm.update("burgers", condition, function(result) {
+            callback(result);
+        });
+    },
+    delete: function(objColumnVals, condition, callback) {
+        orm.delete("burgers", condition, function(result) {
+            callback(result);
+            console.log("second: " + result);
+        });
     }
 };
+
+module.exports = burger;

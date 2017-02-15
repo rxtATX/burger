@@ -4,6 +4,7 @@ var connection = passcode.connection;
 
 connection.connect(function(err) {
     if (err) throw err;
+    console.log("Connection thread: " + connection.threadId);
 });
 
 module.exports = connection;
