@@ -18,12 +18,11 @@ var burger = {
             callback(result);
         });
     },
-    delete: function(objColumnVals, condition, callback) {
-        orm.delete("burgers", condition, function(result) {
-            callback(result);
-            console.log("second: " + result);
-        });
-    }
+    delete: function(condition, cb) {
+    orm.delete("burgers", condition, function(res) {
+      cb(res);
+    });
+  }
 };
 
 module.exports = burger;

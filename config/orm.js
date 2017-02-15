@@ -26,14 +26,14 @@ var orm = {
         });
     },
 
-    delete: function(query, condition, callback) {
-        sqlDatabase.query("DELETE FROM plans WHERE id = ?", condition, function(err, result) {
+    delete: function(table, condition, callback) {
+        var queryString = "DELETE FROM burgers WHERE " + condition;
+       
+        sqlDatabase.query(queryString, function(err, result) {
             if (err) {
                 throw err;
             }
-            console.log("condition");
             callback(result);
-            console.log("first: " + result);
         });
     }
 };
