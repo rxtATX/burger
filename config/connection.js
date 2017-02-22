@@ -3,7 +3,7 @@ var passcode = require("../keys.js");
 var connection = passcode.connection;
 
 if (process.env.JAWSDB_URL){
-    connection = mysql.createConnection(process.env.JAWS_URL);
+    connection = mysql.createConnection(process.env.JAWSDB_URL);
 };
 
 connection.connect(function(err) {
